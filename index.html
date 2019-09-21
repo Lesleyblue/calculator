@@ -7,29 +7,22 @@
   <title>Document</title>
 </head>
 <body>
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
      <div id="cal">
-        <h1>计算器</h1>
+        <h1>小型计算器</h1>
         <input v-model="num1">
 
         <!-- currentOp表示当前运算符 -->
-        <select v-model="currentOp"> 
+        <!-- <select v-model="currentOp"> 
             <option value="+">+</option>
             <option value="-">-</option>
             <option value="*">×</option>
             <option value="/">÷</option>
-        </select>
-
+        </select> -->
+        <select v-model="currentOp">
+         <option v-for="op of operations " :value="op">{{op}}</option>
+       </select>
         <input v-model="num2">
-        <input type="button" value="=" @click="sum">
+        <input type="button" value="=" @click="calculate">
         <div>结果：{{result}}</div>
      </div>
    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -40,22 +33,34 @@
           currentOp:"+",
           num1:"",
           num2:"",
-          result:0   
+          result:0,
+          operations:['+','-','*','/']   
         },
         methods:{
-          sum:function(){
-            if(this.currentOp==="+")
-               this.result = Number(this.num1)+Number(this.num2);
-            else if(this.currentOp==="-")
-               this.result = Number(this.num1)-Number(this.num2); 
-            else if(this.currentOp==="*")
-               this.result = Number(this.num1)*Number(this.num2);
-            else if(this.currentOp==="/"){
-               if(Number(this.num2)===0)
-                  this.result = "输入有误！";
-               else   
-                  this.result = Number(this.num1)/Number(this.num2);  
+          calculate:function(){
+            if(this.num1.trim()===""||this.num2.trim()===""){
+                this.result = "输入不能为空！";
+                return;
             }
+             switch(this.currentOp){
+                case '+':
+                     this.result = Number(this.num1)+Number(this.num2);
+                     break;
+                case '-':
+                     this.result = Number(this.num1)-Number(this.num2);
+                     break;
+                case '*':
+                     this.result = Number(this.num1)*Number(this.num2);
+                     break;
+                case '/':
+                     if(Number(this.num2)===0){
+                        this.result = "输入有误！"; 
+                        return;
+                     }
+                     this.result = Number(this.num1)/Number(this.num2);
+                     break;
+             }
+            
             
           }
         }
