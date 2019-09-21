@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+     <div id="cal">
+        <h1>计算器</h1>
+        <input v-model="num1">
+
+        <!-- currentOp表示当前运算符 -->
+        <select v-model="currentOp"> 
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">×</option>
+            <option value="/">÷</option>
+        </select>
+
+        <input v-model="num2">
+        <input type="button" value="=" @click="sum">
+        <div>结果：{{result}}</div>
+     </div>
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   <script>
+      var app = new Vue({
+        el:"#cal",
+        data:{
+          currentOp:"+",
+          num1:"",
+          num2:"",
+          result:0   
+        },
+        methods:{
+          sum:function(){
+            if(this.currentOp==="+")
+               this.result = Number(this.num1)+Number(this.num2);
+            else if(this.currentOp==="-")
+               this.result = Number(this.num1)-Number(this.num2); 
+            else if(this.currentOp==="*")
+               this.result = Number(this.num1)*Number(this.num2);
+            else if(this.currentOp==="/"){
+               if(Number(this.num2)===0)
+                  this.result = "输入有误！";
+               else   
+                  this.result = Number(this.num1)/Number(this.num2);  
+            }
+            
+          }
+        }
+      });
+   </script>
+</body>
+</html>
